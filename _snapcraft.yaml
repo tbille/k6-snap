@@ -12,8 +12,9 @@ base: core20
 parts:
   k6:
     plugin: go
-    source: https://github.com/grafana/k6/tree/$VERSION
+    source: https://github.com/$GITHUB_REPO
     source-type: git
+    source-tag: $VERSION
 
 apps:
   k6:

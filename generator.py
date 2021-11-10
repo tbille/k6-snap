@@ -6,10 +6,11 @@ SNAP_NAME = "k6"
 GITHUB_REPO = "grafana/k6"
 
 
-def update_file(file_name, version):
+def update_file(file_name, repo, version):
     with open(file_name) as file_handle:
         file_contents = file_handle.read()
 
+    file_contents = file_contents.replace("$GITHUB_REPO", repo)
     file_contents = file_contents.replace("$VERSION", version)
 
     with open(file_name, "w") as file_handle:
@@ -51,4 +52,4 @@ if last_published_version == last_github_release:
     sys.exit(1)
 
 copyfile("_snapcraft.yaml", "snapcraft.yaml")
-update_file("snapcraft.yaml", last_github_release)
+update_file("snapcraft.yaml", GITHUB_REPO, last_github_release)

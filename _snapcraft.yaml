@@ -1,0 +1,24 @@
+name: k6
+version: '$VERSION'
+summary: A modern load testing tool, using Go and JavaScript
+description: |
+  k6 is a modern load testing tool, building on our years of 
+  experience in the load and performance testing industry. 
+  It provides a clean, approachable scripting API, local and 
+  cloud execution, and flexible configuration.
+
+base: core20
+
+parts:
+  k6:
+    plugin: go
+    source: https://github.com/grafana/k6/tree/$VERSION
+    source-type: git
+
+apps:
+  k6:
+    plugs:
+      - home
+      - network
+      - network-bind
+    command: bin/k6

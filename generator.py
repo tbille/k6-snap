@@ -45,11 +45,11 @@ last_github_release = releases["tag_name"]
 
 if releases["prerelease"]:
     print("Exit: prerelease")
-    sys.exit(1)
+    sys.exit(0)
 
 if last_published_version == last_github_release:
     print("Exit: no new version")
-    sys.exit(1)
+    sys.exit(0)
 
 copyfile("_snapcraft.yaml", "snapcraft.yaml")
 update_file("snapcraft.yaml", GITHUB_REPO, last_github_release)

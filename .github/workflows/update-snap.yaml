@@ -16,6 +16,8 @@ jobs:
 
       - name: Create snapcraft.yaml
         run: python generator.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check snapcraft.yaml exists
         id: check_files

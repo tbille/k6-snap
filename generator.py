@@ -1,3 +1,4 @@
+import os
 import requests
 import sys
 from shutil import copyfile
@@ -32,15 +33,25 @@ def get_latest_version(channel_maps):
     return newest_channel["version"]
 
 
-snap_info = requests.get(
+snap_info_response = requests.get(
     f"https://api.snapcraft.io/v2/snaps/info/{SNAP_NAME}",
     headers={"Snap-Device-Series": "16"},
-).json()
+)
+snap_info_response.raise_for_status()
+snap_info = snap_info_response.json()
 last_published_version = get_latest_version(snap_info["channel-map"])
 
-releases = requests.get(
-    f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
-).json()
+github_headers = {"Accept": "application/vnd.github+json"}
+github_token = os.environ.get("GITHUB_TOKEN")
+if github_token:
+    github_headers["Authorization"] = f"Bearer {github_token}"
+
+releases_response = requests.get(
+    f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest",
+    headers=github_headers,
+)
+releases_response.raise_for_status()
+releases = releases_response.json()
 last_github_release = releases["tag_name"]
 
 if releases["prerelease"]:

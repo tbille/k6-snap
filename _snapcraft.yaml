@@ -8,6 +8,7 @@ description: |
   cloud execution, and flexible configuration.
 
 base: core24
+confinement: strict
 
 parts:
   k6:
